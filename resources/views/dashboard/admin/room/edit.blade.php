@@ -100,7 +100,8 @@
                                                 name="{{ $rooms->kind_en === 'single room' ? 'single_price' : ($rooms->kind_en === 'double room' ? 'double_price' : 'triple_price') }}"
                                                 value="{{ $rooms->price }}" class="form-control" />
                                         </td>
-                                        <td><input type="file" id="upload"
+                                        <td>
+                                            <input type="file" id="upload"
                                                 onchange="loadFile(event,'{{ $rooms->kind_en }}')"
                                                 name="{{ $rooms->kind_en === 'single room' ? 'single_image' : ($rooms->kind_en === 'double room' ? 'double_image' : 'triple_image') }}"
                                                 value="" class="input-group date" /><br>
@@ -112,7 +113,7 @@
                                     @endforeach
 
                                     @if (count($result) != 0)
-                                    @foreach ($result as $results)
+                                    @foreach ($result as $key => $results)
                                     <tr>
                                         <td>
                                             <select
@@ -131,9 +132,14 @@
                                                 name="{{ $results === 'single room' ? 'single_price' : ($results === 'double room' ? 'double_price' : 'triple_price') }}"
                                                 value="0" class="form-control" />
                                         </td>
-                                        <td><input type="file" id="files"
+                                        <td>
+                                            <input type="file" id="{{ $results }}"
+                                                onchange="loadFile2(event,'{{ $results }}','{{$key}}')"
                                                 name="{{ $results === 'single room' ? 'single_image' : ($results === 'double room' ? 'double_image' : 'triple_image') }}"
-                                                value="" class="input-group date" />
+                                                value="" class="input-group date" /><br>
+
+                                            <img id="output{{$key}}" width="100" />
+
                                         </td>
                                     </tr>
                                     @endforeach
@@ -180,6 +186,10 @@
 
         };
 
+        var loadFile2 = function(event, name,key) {
+            var image = document.getElementById('output'+key);
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
 
         @if (Session::has('message'))
             toastr.options = {
