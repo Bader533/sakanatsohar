@@ -124,7 +124,7 @@ class RoomController extends Controller
         $validator = Validator($request->all(), $rule);
         if (!$validator->fails()) {
             if ($room->currentrooms == $room->totalrooms && $room->orderrooms == 0) {
-                
+
                 $this->addRoom(
                     Room::where('kind_en', '=', 'single room')->where('living_id', $room->living_id)->first() ?? $room = new Room(),
                     $request,
@@ -154,7 +154,6 @@ class RoomController extends Controller
                     $request->input('triple_price'),
                     $request->file('triple_image'),
                 );
-
             } else {
                 return redirect()->back()->with('error', 'Update The Room Not Avalible');
             }
