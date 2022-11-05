@@ -120,6 +120,7 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
+        //updated
         $rule = $this->rule();
         $validator = Validator($request->all(), $rule);
         if (!$validator->fails()) {
